@@ -8,8 +8,8 @@ public class Parqueadero {
 	private String nombre;
 	
 	private Propietario[] listaPropietarios;
-	private ArrayList<Vehiculo> listaVehiculos;
-	private ArrayList<RegistroParqueo> listaRegistroParqueo;
+	private ArrayList<Vehiculo> listaVehiculos = new ArrayList<>();
+	private ArrayList<RegistroParqueo> listaRegistroParqueo = new ArrayList<>();
 	private Puesto[][] listaPuestos;
 	
 	public Parqueadero(String nombre, Propietario[] listaPropietarios, ArrayList<Vehiculo> listaVehiculos,
@@ -20,15 +20,29 @@ public class Parqueadero {
 		this.listaVehiculos = listaVehiculos;
 		this.listaRegistroParqueo = listaRegistroParqueo;
 		this.listaPuestos = listaPuestos;
+	}
+	
+	public Parqueadero(String nombre, int numPropietarios, ArrayList<Vehiculo> listaVehiculos,
+			ArrayList<RegistroParqueo> listaRegistroParqueo, int numFilasPuestos, int numColumnasPuestos) {
+		super();
+		this.nombre = nombre;
+		this.listaPropietarios = new Propietario[numPropietarios];
+		this.listaVehiculos = listaVehiculos;
+		this.listaRegistroParqueo = listaRegistroParqueo;
+		this.listaPuestos = new Puesto[numFilasPuestos][numColumnasPuestos];
 	}	
 	
 	public Parqueadero(String nombre) {
 		super();
 		this.nombre = nombre;
+		this.listaPropietarios = new Propietario[10];
+		this.listaPuestos = new Puesto[10][10];
 	}
 
 	public Parqueadero() {
 		super();
+		this.listaPropietarios = new Propietario[10];
+		this.listaPuestos = new Puesto[10][10];
 	}
 
 	public String getNombre() {
