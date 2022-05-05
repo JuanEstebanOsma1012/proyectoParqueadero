@@ -94,5 +94,9 @@ public class Vehiculo {
 			return false;
 		return true;
 	}
+
+	public boolean verificarPlaca(String placa) {
+		return this.placa.equals(placa);
+	}
 	
 }

@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class Parqueadero {
 
@@ -115,6 +116,113 @@ public class Parqueadero {
 		} else if (!nombre.equals(other.nombre))
 			return false;
 		return true;
+	}
+	
+	/**
+	 * Punto 1: metodo que inicializa la matriz de puestos tal que quede con una fila de carros y otra fila de motos
+	 */
+	public void inicializarMatrizDePuestosIntercalados(){
+		
+		Iterator<Puesto[]> i = Arrays.asList(listaPuestos).iterator();
+		while (i.hasNext()) {
+
+			inicializarArregloConTipoVehiculo(i.next(), TipoVehiculo.CARRO);
+			
+			if (i.hasNext()) {
+				
+				inicializarArregloConTipoVehiculo(i.next(), TipoVehiculo.MOTO);
+				
+			}
+		}
+	}
+	
+	//igual que el metodo anterior pero lo hace sin iterables, aunque es mas susceptible a errores
+
+//	public void inicializarMatrizDePuestosIntercalados(){
+//		
+//		for (int i = 0; i < listaPuestos.length; i+=2) {
+//			inicializarArregloConTipoVehiculo(listaPuestos[i], TipoVehiculo.CARRO);
+//		}
+//		for (int i = 1; i < listaPuestos.length; i+=2) {
+//			inicializarArregloConTipoVehiculo(listaPuestos[i], TipoVehiculo.CARRO);
+//		}
+//	}
+	
+	//Desde aqui empieza el CRUD de vehiculo
+	
+	/**
+	 * Punto 2: este metodo crea un vehiculo con todos los parametros que este contiene,
+	 * se asume que el parqueadero al que pertenece ese vehiculo es desde el que lo estamos creando
+	 * @param placa
+	 * @param modelo
+	 * @param propietario
+	 * @param tipoVehiculo
+	 * @return
+	 */
+	public boolean crearVehiculo(String placa, String modelo, Propietario propietario, TipoVehiculo tipoVehiculo){
+		
+		try {
+			
+			Vehiculo vehiculo = new Vehiculo(placa, modelo, propietario, this, tipoVehiculo);
+			listaVehiculos.add(vehiculo);
+			return true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
+	 * Punto 3: este metodo busca un vehiculo en la lista de vehiculos del parqueadero, unicamente
+	 * por su placa, ya que es imposible que dos vehiculos tengan la misma placa
+	 * @param placa
+	 * @return
+	 */
+	public Vehiculo buscarVehiculo(String placa){
+		
+		for (Vehiculo vehiculo : listaVehiculos) {
+			if (vehiculo != null && vehiculo.verificarPlaca(placa)) {
+				return vehiculo;
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Punto 4: este metodo elimina un vehiculo de la lista de vehiculos del parqueadero, unicamente
+	 * validando su placa, se hace eso de la funcion buscar vehiculo para traer el vehiculo que debo eliminar
+	 * @param placa
+	 * @return
+	 */
+	public boolean eliminarVehiculo(String placa){
+		
+		try {
+			
+			Vehiculo vehiculoEncontrado = buscarVehiculo(placa);
+			if (vehiculoEncontrado != null) {
+				listaVehiculos.remove(vehiculoEncontrado);
+			}
+			
+			return true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	private void inicializarArregloConTipoVehiculo(Puesto[] arreglo, TipoVehiculo tipoVehiculo) {
+
+		for (int i = 0; i < arreglo.length; i++) {
+			
+			if (arreglo[i] == null) {
+				arreglo[i] = new Puesto();
+			}
+			
+			arreglo[i].setTipoPuesto(tipoVehiculo);
+		}
 	}
 	
 }
