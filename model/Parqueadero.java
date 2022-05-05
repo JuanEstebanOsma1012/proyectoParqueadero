@@ -212,6 +212,36 @@ public class Parqueadero {
 			return false;
 		}
 	}
+	
+	/**
+	 * Punto 5: este metodo permite obtener la suma del dinero recaudado por los puestos que hay
+	 * en la fila que se le da por parametro, arroja una excepcion si esa fila no existe o
+	 * tiene un valor negativo
+	 * @param numFila
+	 * @return
+	 */
+	public Double obtenerSumaRegistrosFila(int numFila){
+		
+		if (numFila >= 0 && numFila < listaPuestos.length) {
+			
+			double suma = 0;
+			for (int i = 0; i < listaPuestos[numFila].length; i++) {
+				if (listaPuestos[numFila][i] != null) {
+					for (int j = 0; j < listaRegistroParqueo.size(); j++) {
+						
+						RegistroParqueo registroParqueoAux = listaRegistroParqueo.get(j);
+						if (registroParqueoAux.verificarPuesto(listaPuestos[numFila][i])) {
+							suma += registroParqueoAux.getTotal();
+						}
+					}
+				}
+			}
+			
+			return suma;
+		} else {
+			throw new RuntimeException("la fila que dio por parametro no existe");
+		}
+	}
 
 	private void inicializarArregloConTipoVehiculo(Puesto[] arreglo, TipoVehiculo tipoVehiculo) {
 

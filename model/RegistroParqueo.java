@@ -114,5 +114,11 @@ public class RegistroParqueo {
 			return false;
 		return true;
 	}
+
+	public boolean verificarPuesto(Puesto puesto) {
+
+		return puesto.equals(this.puesto) || puesto == this.puesto;
+		
+	}
 	
 }
